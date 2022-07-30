@@ -19,6 +19,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
+        Inertia::setRootview('login');
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
@@ -33,11 +34,13 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
+        Inertia::setRootview('app');
+
         $request->authenticate();
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        return Auth::user() ? Inertia::location('/dashboard') : null;
     }
 
     /**

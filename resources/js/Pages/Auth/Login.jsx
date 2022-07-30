@@ -1,94 +1,80 @@
-import React, { useEffect } from 'react';
-import Button from '@/Components/Button';
-import Checkbox from '@/Components/Checkbox';
-import Guest from '@/Layouts/Guest';
-import Input from '@/Components/Input';
-import Label from '@/Components/Label';
-import ValidationErrors from '@/Components/ValidationErrors';
-import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import { Inertia } from "@inertiajs/inertia";
+import React from "react";
+import "../../../css/login.css";
 
-export default function Login({ status, canResetPassword }) {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        email: '',
-        password: '',
-        remember: '',
+function Login() {
+    const [data, setData] = React.useState({
+        email: "",
+        password: "",
     });
-
-    useEffect(() => {
-        return () => {
-            reset('password');
-        };
-    }, []);
-
-    const onHandleChange = (event) => {
-        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+    const handleUpdateData = (e) => {
+        setData((source) => ({ ...source, [e.target.name]: e.target.value }));
     };
-
-    const submit = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-
-        post(route('login'));
+        Inertia.post("/login", data);
     };
-
     return (
-        <Guest>
-            <Head title="Log in" />
-
-            {status && <div className="mb-4 font-medium text-sm text-green-600">{status}</div>}
-
-            <ValidationErrors errors={errors} />
-
-            <form onSubmit={submit}>
-                <div>
-                    <Label forInput="email" value="Email" />
-
-                    <Input
-                        type="text"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                    />
-                </div>
-
-                <div className="mt-4">
-                    <Label forInput="password" value="Password" />
-
-                    <Input
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="current-password"
-                        handleChange={onHandleChange}
-                    />
-                </div>
-
-                <div className="block mt-4">
-                    <label className="flex items-center">
-                        <Checkbox name="remember" value={data.remember} handleChange={onHandleChange} />
-
-                        <span className="ml-2 text-sm text-gray-600">Remember me</span>
-                    </label>
-                </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    {canResetPassword && (
-                        <Link
-                            href={route('password.request')}
-                            className="underline text-sm text-gray-600 hover:text-gray-900"
+        <div className="container">
+            <div className="row">
+                <div className="col-md-6 offset-md-3">
+                    <h2 className="text-center text-dark mt-3">
+                        Login do Usuário
+                    </h2>
+                    <div className="card my-2">
+                        <form
+                            className="card-body cardbody-color p-lg-5"
+                            onSubmit={handleSubmit}
                         >
-                            Forgot your password?
-                        </Link>
-                    )}
-
-                    <Button className="ml-4" processing={processing}>
-                        Log in
-                    </Button>
+                            <div className="text-center">
+                                <img
+                                    src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png"
+                                    className="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
+                                    width="200px"
+                                    alt="profile"
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <input
+                                    type="text"
+                                    className="form-control"
+                                    id="email"
+                                    name="email"
+                                    aria-describedby="emailHelp"
+                                    placeholder="E-mail"
+                                    value={data.email}
+                                    onChange={handleUpdateData}
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <input
+                                    type="password"
+                                    className="form-control"
+                                    name="password"
+                                    id="password"
+                                    placeholder="password"
+                                    value={data.password}
+                                    onChange={handleUpdateData}
+                                />
+                            </div>
+                            <div className="text-center">
+                                <button
+                                    type="submit"
+                                    className="btn btn-color px-5 mb-5 w-100"
+                                >
+                                    Login
+                                </button>
+                            </div>
+                            <div
+                                id="emailHelp"
+                                className="form-text text-center mb-1 text-dark"
+                            ></div>
+                        </form>
+                    </div>
                 </div>
-            </form>
-        </Guest>
+            </div>
+        </div>
     );
 }
+
+export default Login;

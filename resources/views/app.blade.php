@@ -9,7 +9,7 @@
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
         <link rel="stylesheet" href="/css/all.css">
-
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>        
         <!-- Scripts -->
         @routes
         @viteReactRefresh
@@ -17,6 +17,7 @@
         @inertiaHead
     </head>
     <body class="font-sans antialiased">
-        @inertia
+        @inertia        
+        <script>(function(){'use strict';feather.replace({ 'aria-hidden': 'true' })}())</script>
     </body>
 </html>

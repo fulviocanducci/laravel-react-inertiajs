@@ -1,22 +1,23 @@
 import React from "react";
 import { Link } from "@inertiajs/inertia-react";
-import Container from "../Container";
+import { Head } from "@inertiajs/inertia-react";
 
 export default function Index(props) {
     const posts = props.posts.data;
     return (
-        <Container headerTitle="Posts" {...props}>
-            <div className="p-8 overflow-auto relative">
-                <table className="w-full whitespace-nowrap md:table-fixed table-auto">
+        <>
+            <Head title="Posts" />
+            <div className="p-8 overflow-auto relative mt-3">
+                <table className="table table-sm table-bordered">
                     <thead>
-                        <tr>
-                            <th className="w-1/4">Código</th>
-                            <th className="w-3/4">Titulo</th>
-                            <th className="w-1/4">...</th>
+                        <tr className="table-secondary">
+                            <th className="">Código</th>
+                            <th className="">Titulo</th>
+                            <th className="">...</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {(posts === null || posts.length == 0) && (
+                        {(posts === null || posts.length === 0) && (
                             <tr>
                                 <td colSpan={3} className="text-center">
                                     Nenhum registro
@@ -33,9 +34,10 @@ export default function Index(props) {
                                             href={route("posts.edit", [
                                                 item.id,
                                             ])}
-                                            className="px-6 py-2 text-blue-100 no-underline bg-blue-500 rounded hover:bg-blue-600 hover:no-underline hover:text-blue-300"
+                                            className="btn btn-primary btn-sm"
                                         >
-                                            <i class="fas fa-heart"></i> Alterar
+                                            <i className="fas fa-heart"></i>{" "}
+                                            Alterar
                                         </Link>
                                     </td>
                                 </tr>
@@ -43,6 +45,6 @@ export default function Index(props) {
                     </tbody>
                 </table>
             </div>
-        </Container>
+        </>
     );
 }
